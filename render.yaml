@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: chat-app-backend
+    env: node
+    plan: free
+    branch: main
+    root: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://<username>:<password>@cluster0.a2pic.mongodb.net/chat_db?retryWrites=true&w=majority&appName=Cluster0
+        # Replace with your MongoDB connection string
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: JWT_SECRET
+        value: <your_jwt_secret_key_here>
+      - key: FRONTEND_URL
+        value: https://<your-frontend-domain>.onrender.com
+      - key: CLOUDINARY_CLOUD_NAME
+        value: your-cloud-name
+      - key: CLOUDINARY_API_KEY
+        value: fake-api-key
+      - key: CLOUDINARY_API_SECRET
+        value: fake-secret
+
+  - type: static
+    name: chat-app-frontend
+    plan: free
+    branch: main
+    root: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
