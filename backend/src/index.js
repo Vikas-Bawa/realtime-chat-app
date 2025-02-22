@@ -19,8 +19,14 @@ const __dirname = path.resolve();
 app.use(express.json({ limit: '10mb' }));  // Increase limit to 10MB
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
+
+const allowedOrigin =
+    process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_URL  // set this in Render’s environment variables
+        : "http://localhost:5173";
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "allowedOrigin",
     credentials: true
 }))
 
